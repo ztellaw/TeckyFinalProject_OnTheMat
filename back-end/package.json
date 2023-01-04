@@ -7,6 +7,7 @@
     "knex": "^2.3.0",
     "listening-on": "^2.0.9",
     "pg": "^8.8.0",
+    "quick-erd": "^4.0.2",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
