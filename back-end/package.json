@@ -1,11 +1,11 @@
 {
   "dependencies": {
+    "@types/pg": "^8.6.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "@types/pg": "^8.6.6",
     "express": "^4.18.2",
-    "listening-on": "^2.0.9",
     "knex": "^2.3.0",
+    "listening-on": "^2.0.9",
     "pg": "^8.8.0"
   },
   "devDependencies": {
