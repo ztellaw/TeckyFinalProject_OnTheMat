@@ -1,3 +1,2 @@
 CREATE USER onthemat WITH PASSWORD 'onthemat' SUPERUSER;
 CREATE DATABASE onthemat;
-1
