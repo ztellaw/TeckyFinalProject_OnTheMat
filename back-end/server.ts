@@ -1,3 +1,4 @@
+import { userRouter } from "./user";
 import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
@@ -18,7 +19,7 @@ let app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(userRouter);
 app.use((req, res) => {
   res.status(404);
   res.sendFile(path.resolve("public", "404.html"));
