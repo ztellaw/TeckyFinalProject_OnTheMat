@@ -16,6 +16,7 @@ import {
   Image,
   Switch,
   Space,
+  BackgroundImage,
 } from "@mantine/core";
 import {
   errorNotifications,
@@ -27,6 +28,10 @@ import {
   IconLock,
   IconMail,
 } from "@tabler/icons";
+import SignInOrSignUp from "../components/SignInOrSignUp";
+import GoogleLogin from "../components/GoogleLogin";
+import ButtonSubmit from "../components/SubmitButton";
+import SubmitButton from "../components/SubmitButton";
 
 export default function Login() {
   const [sendLoginInformation, setSendLoginInformation] =
@@ -70,72 +75,66 @@ export default function Login() {
   }
   return (
     <div>
+      <BackgroundImage src="./YOGA_BackgroundImage.png" />
       <Container>
-        <Image radius="sm" src="./YOGA_Image.png" alt="Random unsplash image" />
-        <Text fz="xl">Sign In</Text>
+        <Container>
+          <Image
+            radius="sm"
+            src="./YOGA_Image.png"
+            alt="Random unsplash image"
+          />
+          <Text fz="xl" fw={700}>
+            Sign In
+          </Text>
+          <Space h="md" />
 
-        <TextInput
-          label="Email"
-          type="text"
-          placeholder="abc@email.com"
-          icon={<IconMail />}
-          onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
-          onChange={(e) =>
-            setSendLoginInformation({
-              ...sendLoginInformation,
-              email: e.target.value,
-            })
-          }
-        />
+          <TextInput
+            type="text"
+            placeholder="abc@email.com"
+            icon={<IconMail />}
+            onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
+            onChange={(e) =>
+              setSendLoginInformation({
+                ...sendLoginInformation,
+                email: e.target.value,
+              })
+            }
+          />
+          <Space h="md" />
 
-        <PasswordInput
-          label="Password"
-          icon={<IconLock />}
-          placeholder="Your password"
-          onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
-          onChange={(e) => {
-            setSendLoginInformation({
-              ...sendLoginInformation,
-              password: e.target.value,
-            });
-          }}
-        />
+          <PasswordInput
+            icon={<IconLock />}
+            placeholder="Your password"
+            onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
+            onChange={(e) => {
+              setSendLoginInformation({
+                ...sendLoginInformation,
+                password: e.target.value,
+              });
+            }}
+          />
+        </Container>
         <Space h="md" />
-
         <Group position="right">
           <Link to="/forgetpassword">
-            <Text fs="italic">Forget password</Text>
+            <Text fs="italic">Forget password?</Text>
           </Link>
         </Group>
         <Space h="md" />
-        <Group position="center">
-          <Button type="submit" onClick={confirmLogin} color="violet">
-            <Group>
-              Login
-              <IconArrowBigRight />
-            </Group>
-          </Button>
-        </Group>
+        <SubmitButton onClick={confirmLogin} color="violet" type="next">
+          Login
+        </SubmitButton>
         <Space h="md" />
         <Group position="center">
           <Text>OR</Text>
         </Group>
         <Space h="md" />
-        <Group position="center">
-          <Button onClick={googleLogin} variant="subtle">
-            <Group position="center">
-              <Image width={30} src="./Google_Login.png" />
-              <Text>Google Login</Text>
-            </Group>
-          </Button>
-        </Group>
-        <Space h="md" />
-        <Group position="center">
-          <i>Don't have on account?</i>
-          <Link to="/register">
-            <Text fs="italic">Sign up</Text>
-          </Link>
-        </Group>
+        <GoogleLogin />
+        <SignInOrSignUp
+          router={"/register"}
+          text={"Don't"}
+          signInOrSignOut={"Sign up"}
+        />
       </Container>
     </div>
   );

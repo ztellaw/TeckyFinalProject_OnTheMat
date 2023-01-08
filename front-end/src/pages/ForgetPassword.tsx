@@ -3,12 +3,16 @@ import {
   Button,
   Container,
   Flex,
+  Group,
   PasswordInput,
+  Space,
   Text,
   TextInput,
 } from "@mantine/core";
+import { IconArrowBigRight, IconMail } from "@tabler/icons";
 import React, { FormEvent, useState } from "react";
 import { redirect } from "react-router-dom";
+import BackToLogin from "../components/Backtologin";
 import Header from "../components/Header";
 import { useFetch } from "../hooks/Fetch";
 
@@ -36,13 +40,19 @@ export default function ForgetPassword() {
 
   return (
     <div>
-      <Header />
       <Container>
-        <Text>Forget Password</Text>
-
+        <BackToLogin />
+        <Text fz="xl" fw={700}>
+          Reset Password
+        </Text>
+        <Space h="md" />
+        <Text fs="italic">
+          Please enter your email address to request a password reset
+        </Text>
+        <Space h="md" />
         <TextInput
-          label="Email"
           type="email"
+          icon={<IconMail />}
           onKeyUp={(e) => e.key == "Enter" && changePassword()}
           onChange={(e) =>
             setChangeUserInformation({
@@ -51,31 +61,15 @@ export default function ForgetPassword() {
             })
           }
         />
-
-        <TextInput
-          label="Username"
-          type="text"
-          onKeyUp={(e) => e.key == "Enter" && changePassword()}
-          onChange={(e) =>
-            setChangeUserInformation({
-              ...changeUserInformation,
-              username: e.target.value,
-            })
-          }
-        />
-
-        <PasswordInput
-          label="Password"
-          type={show ? "text" : "password"}
-          onKeyUp={(e) => e.key == "Enter" && changePassword()}
-          onChange={(e) =>
-            setChangeUserInformation({
-              ...changeUserInformation,
-              newPassword: e.target.value,
-            })
-          }
-        />
-        <Button onClick={changePassword}>Submit</Button>
+        <Space h="md" />
+        <Group position="center">
+          <Button onClick={changePassword} color="violet">
+            <Group position="center">
+              <Text>SUBMIT</Text>
+              <IconArrowBigRight />
+            </Group>
+          </Button>
+        </Group>
       </Container>
     </div>
   );
