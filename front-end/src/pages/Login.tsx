@@ -1,24 +1,32 @@
-import React, { FormEvent, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, provide } from "../configs/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useFetch } from "../hooks/Fetch";
-import Header from "../components/Header";
 
 import {
   Box,
   Button,
   Container,
   Flex,
+  Group,
   PasswordInput,
   Text,
   TextInput,
+  Image,
+  Switch,
+  Space,
 } from "@mantine/core";
 import {
   errorNotifications,
   successNotifications,
 } from "../hooks/Notification";
-import { IconBrandGoogle, IconMail } from "@tabler/icons";
+import {
+  IconArrowBigRight,
+  IconBrandGoogle,
+  IconLock,
+  IconMail,
+} from "@tabler/icons";
 
 export default function Login() {
   const [sendLoginInformation, setSendLoginInformation] =
@@ -63,11 +71,13 @@ export default function Login() {
   return (
     <div>
       <Container>
+        <Image radius="sm" src="./YOGA_Image.png" alt="Random unsplash image" />
         <Text fz="xl">Sign In</Text>
 
         <TextInput
           label="Email"
           type="text"
+          placeholder="abc@email.com"
           icon={<IconMail />}
           onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
           onChange={(e) =>
@@ -80,6 +90,8 @@ export default function Login() {
 
         <PasswordInput
           label="Password"
+          icon={<IconLock />}
+          placeholder="Your password"
           onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
           onChange={(e) => {
             setSendLoginInformation({
@@ -88,20 +100,42 @@ export default function Login() {
             });
           }}
         />
+        <Space h="md" />
 
-        <Button type="submit" onClick={confirmLogin}>
-          Login
-        </Button>
-        <br />
-        <Button onClick={googleLogin} variant="subtle">
-          <IconBrandGoogle />
-        </Button>
-        <br />
-        <Link to="/register">No account?</Link>
-        <br />
-        <Link to="/forgetpassword">Forget Password?</Link>
-        <br />
-        <Link to="/payment">Payment</Link>
+        <Group position="right">
+          <Link to="/forgetpassword">
+            <Text fs="italic">Forget password</Text>
+          </Link>
+        </Group>
+        <Space h="md" />
+        <Group position="center">
+          <Button type="submit" onClick={confirmLogin} color="violet">
+            <Group>
+              Login
+              <IconArrowBigRight />
+            </Group>
+          </Button>
+        </Group>
+        <Space h="md" />
+        <Group position="center">
+          <Text>OR</Text>
+        </Group>
+        <Space h="md" />
+        <Group position="center">
+          <Button onClick={googleLogin} variant="subtle">
+            <Group position="center">
+              <Image width={30} src="./Google_Login.png" />
+              <Text>Google Login</Text>
+            </Group>
+          </Button>
+        </Group>
+        <Space h="md" />
+        <Group position="center">
+          <i>Don't have on account?</i>
+          <Link to="/register">
+            <Text fs="italic">Sign up</Text>
+          </Link>
+        </Group>
       </Container>
     </div>
   );

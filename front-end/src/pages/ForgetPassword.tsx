@@ -17,9 +17,6 @@ export default function ForgetPassword() {
     useState(userInformation);
   const fetch = useFetch();
   const [show, setShow] = useState(false);
-  function changePasswordStatus() {
-    return setShow(!show);
-  }
 
   async function changePassword() {
     let res = await fetch.post("/user/changepassword", changeUserInformation);
