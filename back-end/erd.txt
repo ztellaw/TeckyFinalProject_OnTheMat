@@ -132,7 +132,7 @@ payment_record
 --------------
 id integer PK
 user_id integer FK >- user.id
-amount decimal(100)
+amount decimal
 transaction_date timestamp
 create_date timestamp
 credit integer
@@ -169,6 +169,12 @@ user_id integer NULL
 class_id integer NULL
 studio_id integer NULL
 
+user_bookmark
+-------------
+id integer PK
+user_id FK >- user.id 
+teacher_id integer
+studio_id integer
 
 
 
@@ -184,21 +190,22 @@ studio_id integer NULL
 
 
 # zoom: 0.834
-# user (954, 636)
-# studio (934, 1116)
-# view: (254, -71)
+# user (1374, 568)
+# studio (944, 974)
+# view: (733, 246)
 # studio_area (440, 1132)
-# meta_classes (287, 600)
-# user_credit_event (599, 195)
-# user_classes (242, 452)
+# meta_classes (-154, 924)
+# user_credit_event (582, 132)
+# user_classes (643, 795)
 # classes (250, 779)
 # classes_interval (6, 583)
-# teachers_class (342, 269)
-# class_reviews (574, 627)
-# studio_reviews (585, 844)
-# teachers (563, 410)
+# teachers_class (261, 339)
+# class_reviews (611, 571)
+# studio_reviews (657, 1018)
+# teachers (611, 375)
 # payment_record (941, 160)
-# forum_category (1382, 223)
-# forum_topic (1364, 391)
-# forum_comment (1344, 597)
-# images (1012, 382)
+# forum_category (1317, 202)
+# forum_topic (1596, 856)
+# forum_comment (1058, 615)
+# images (958, 373)
+# user_bookmark (1382, 780)
