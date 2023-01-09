@@ -26,15 +26,12 @@ export default function ForgetPassword() {
     let res = await fetch.post("/user/changepassword", changeUserInformation);
     redirect("/");
     console.log(res);
-
     return res;
   }
 
   function userInformation() {
     return {
       email: "",
-      username: "",
-      newPassword: "",
     };
   }
 

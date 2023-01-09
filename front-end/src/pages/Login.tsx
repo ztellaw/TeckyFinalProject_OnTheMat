@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, provide } from "../configs/Firebase";
-import { signInWithPopup } from "firebase/auth";
 import { useFetch } from "../hooks/Fetch";
+import backgroundImage from "./img/YOGA_BackgroundImage.png";
 
 import {
   Box,
@@ -14,7 +12,6 @@ import {
   Text,
   TextInput,
   Image,
-  Switch,
   Space,
   BackgroundImage,
 } from "@mantine/core";
@@ -22,41 +19,52 @@ import {
   errorNotifications,
   successNotifications,
 } from "../hooks/Notification";
-import {
-  IconArrowBigRight,
-  IconBrandGoogle,
-  IconLock,
-  IconMail,
-} from "@tabler/icons";
+import { IconLock, IconMail } from "@tabler/icons";
 import SignInOrSignUp from "../components/SignInOrSignUp";
 import GoogleLogin from "../components/GoogleLogin";
-import ButtonSubmit from "../components/SubmitButton";
 import SubmitButton from "../components/SubmitButton";
+import { useForm } from "@mantine/form";
+import { loginFormat, Rule } from "../global/Model";
+import { genValidator } from "../hooks/getValidator";
 
 export default function Login() {
-  const [sendLoginInformation, setSendLoginInformation] =
-    useState(loginInformation);
-
   const navigate = useNavigate();
 
   const fetch = useFetch();
 
-  const googleLogin = async () => {
-    const result: any = await signInWithPopup(auth, provide);
-    const accessToken = result.user.accessToken;
+  const form = useForm({
+    initialValues: { email: "", password: "" },
+    // validateInputOnChange: true,
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      password: genValidator([
+        {
+          reason: "the password must be at least 8 characters",
+          match: (value) => value.length < 8,
+        },
+        {
+          reason: "the password must consist of a lowercase letter",
+          match: (value) => !value.match(/[a-z]/),
+        },
+        {
+          reason: "the password must consist of a upper letter",
+          match: (value) => !value.match(/[A-Z]/),
+        },
+        {
+          reason: "the password must consist of a symbol",
+          match: (value) =>
+            !`\`~!@#$%^&*()_+-=[]{};':",./<>?\\|`
+              .split("")
+              .some((c) => value.includes(c)),
+        },
+      ]),
+    },
+  });
 
-    let res = await fetch.post("/user/googlelogin", { accessToken });
+  async function confirmLogin(value: loginFormat) {
+    console.log(value);
 
-    localStorage.setItem("token", res.token);
-
-    successNotifications(res.username);
-    return navigate(`/forum`);
-  };
-
-  async function confirmLogin() {
-    console.log(sendLoginInformation);
-
-    let result = await fetch.post("/user/login", sendLoginInformation);
+    let result = await fetch.post("/user/login", value);
 
     if (result.messages) {
       return errorNotifications(result.messages);
@@ -67,16 +75,10 @@ export default function Login() {
     return navigate(`/forum`);
   }
 
-  function loginInformation() {
-    return {
-      email: "",
-      password: "",
-    };
-  }
   return (
     <div>
-      <BackgroundImage src="./YOGA_BackgroundImage.png" />
-      <Container>
+      <BackgroundImage src={backgroundImage} />
+      <form onSubmit={form.onSubmit((value) => confirmLogin(value))}>
         <Container>
           <Image
             radius="sm"
@@ -92,50 +94,44 @@ export default function Login() {
             type="text"
             placeholder="abc@email.com"
             icon={<IconMail />}
-            onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
-            onChange={(e) =>
-              setSendLoginInformation({
-                ...sendLoginInformation,
-                email: e.target.value,
-              })
-            }
+            {...form.getInputProps("email")}
           />
           <Space h="md" />
 
           <PasswordInput
             icon={<IconLock />}
             placeholder="Your password"
-            onKeyUp={(e) => e.key == "Enter" && confirmLogin()}
-            onChange={(e) => {
-              setSendLoginInformation({
-                ...sendLoginInformation,
-                password: e.target.value,
-              });
-            }}
+            {...form.getInputProps("password")}
+            className="custom-validate-input-field"
           />
         </Container>
-        <Space h="md" />
-        <Group position="right">
-          <Link to="/forgetpassword">
-            <Text fs="italic">Forget password?</Text>
-          </Link>
-        </Group>
-        <Space h="md" />
-        <SubmitButton onClick={confirmLogin} color="violet" type="next">
-          Login
-        </SubmitButton>
-        <Space h="md" />
-        <Group position="center">
-          <Text>OR</Text>
-        </Group>
-        <Space h="md" />
-        <GoogleLogin />
-        <SignInOrSignUp
-          router={"/register"}
-          text={"Don't"}
-          signInOrSignOut={"Sign up"}
-        />
-      </Container>
+      </form>
+      <Space h="md" />
+      <Group position="right">
+        <Link to="/forgetpassword">
+          <Text fs="italic">Forget password?</Text>
+        </Link>
+      </Group>
+      <Space h="md" />
+      <SubmitButton
+        onClick={form.onSubmit((value) => confirmLogin(value))}
+        color="violet"
+        type="next"
+      >
+        Login
+      </SubmitButton>
+      <Space h="md" />
+      <Group position="center">
+        <Text>OR</Text>
+      </Group>
+      <Space h="md" />
+      <GoogleLogin />
+      <SignInOrSignUp
+        router={"/register"}
+        text={"Don't"}
+        signInOrSignOut={"Sign up"}
+      />
+      <Space h="md" />
     </div>
   );
 }
