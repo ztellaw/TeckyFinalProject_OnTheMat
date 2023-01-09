@@ -4,16 +4,15 @@ body {
     padding: 0;
     height:1000px;
    }
-.container{
-    color: #228b22;
-    text-align: center;
-   }
+
 .footer {
+    display: flex;
     background-color: white;
     border-top:10px solid purple;
     position: fixed;
     width: 100%;
     bottom: 0;
     color: white;
-    font-size: 25px;
+    height: 50px;
+    font-size: 12px;
    }
