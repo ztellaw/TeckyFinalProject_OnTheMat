@@ -9,6 +9,7 @@ import ForumCategory from "./pages/ForumCategory";
 import Payment from "./pages/Payment";
 import ForgetPassword from "./pages/ForgetPassword";
 import ForumModel from "./pages/ForumModel";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/forum/category/:category_id" element={<ForumModel />} />
           <Route path="/forum" element={<ForumCategory />} />
-          <Route path="/change/:user_id" element={<ChangeUserInformation />} />
+          <Route path="/change/:user_id" element={<ChangeUserInformation />} /> 
+          <Route path="/homepage" element={<HomePage/>} />
+
         </Routes>
       </BrowserRouter>
     </div>

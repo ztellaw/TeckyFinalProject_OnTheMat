@@ -1,0 +1,12 @@
+
+.footer {
+    display: flex;
+    background-color: white;
+    border-top:10px solid purple;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: white;
+    height: 50px;
+    font-size: 12px;
+   }
