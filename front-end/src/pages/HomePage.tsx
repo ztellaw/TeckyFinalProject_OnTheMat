@@ -10,13 +10,13 @@ export default function HomePage() {
     
     Current Location
 
-    <Grid>
-        <Grid.Col span={10}>        
+    <Grid mt={20}>
+        <Grid.Col span={9}>        
             <Input 
             icon={<IconSearch />}
             placeholder="Seach"/>
         </Grid.Col>
-        <Grid.Col span={2}>        
+        <Grid.Col span={3}>        
             <Button>
                 Filter
             </Button>
@@ -45,6 +45,7 @@ export default function HomePage() {
         <Carousel.Slide>Nearby You5</Carousel.Slide>
         <Carousel.Slide>Nearby You6</Carousel.Slide>
     </Carousel>
+
 
     <Footer/>
 
